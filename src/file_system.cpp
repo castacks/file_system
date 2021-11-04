@@ -1,17 +1,17 @@
 
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <regex>
 #include <sstream>
 
-#include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include "file_system/file_system.hpp"
 
 std::vector<std::string> get_file_parts(const std::string& path) {
-    boost::filesystem::path p(path);
+    std::filesystem::path p(path);
 
     std::vector<std::string> parts;
 
@@ -27,13 +27,13 @@ std::vector<std::string> get_file_parts(const std::string& path) {
 }
 
 void test_directory(const std::string& dir) {
-    boost::filesystem::path p(dir);
+    std::filesystem::path p(dir);
 
-    if ( !boost::filesystem::is_directory(p) ) {
+    if ( !std::filesystem::is_directory(p) ) {
         // Create the directory.
         try {
-            boost::filesystem::create_directories(p);
-        } catch ( boost::filesystem::filesystem_error& err ) {
+            std::filesystem::create_directories(p);
+        } catch ( std::filesystem::filesystem_error& err ) {
             std::stringstream ss;
             ss << "Create directory " << dir << " failed. ";
             throw(std::runtime_error(ss.str()));
@@ -50,9 +50,9 @@ void test_directory_by_filename( const std::string& fn ) {
 }
 
 bool test_file( const std::string &fn ) {
-    boost::filesystem::path p(fn);
+    std::filesystem::path p(fn);
 
-    return boost::filesystem::is_regular_file(p);
+    return std::filesystem::is_regular_file(p);
 }
 
 std::vector<std::string> read_file_list(const std::string& fn)
@@ -88,7 +88,7 @@ std::vector<std::string> read_file_list(const std::string& fn)
 }
 
 std::vector<std::string> find_files_recursively( const std::string &pathStr, const std::string &pattern ) {
-    namespace fs = boost::filesystem;
+    namespace fs = std::filesystem;
 
     fs::path path(pathStr);
 
