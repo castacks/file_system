@@ -96,7 +96,7 @@ std::vector<std::string> find_files_recursively( const std::string &pathStr, con
         EXCEPTION_DIR_NOT_EXIST(pathStr)
     }
 
-    fs::recursive_directory_iterator iter(path);
+    fs::recursive_directory_iterator iter(path, fs::directory_options::follow_directory_symlink);
     fs::recursive_directory_iterator end;
 
     std::regex re(pattern);
